@@ -1,0 +1,143 @@
+image: node:10
+stages:
+  - check
+  - test
+  - cov
+  - pre-release
+  - release
+  - interop
+
+variables:
+  DOCKER_DRIVER: overlay2
+
+before_script:
+  - npm ci -q
+
+check:
+  stage: check
+  script:
+    - npm run lint
+    - npx dependency-check package.json './test/**/*.js'
+    # - npm install --no-lockfile @commitlint/config-conventional @commitlint/cli --save-dev
+    # - npx commitlint --extends=@commitlint/config-conventional --from=$CI_COMMIT_BEFORE_SHA --to=$CI_COMMIT_SHA
+    - npm run build
+  only:
+    - branches
+  artifacts:
+    paths:
+      - dist/
+
+test-node-8:
+  stage: test
+  image: node:8
+  script:
+    - npx nyc -s npm run test:node
+  artifacts:
+    paths:
+      - .nyc_output/
+  only:
+    changes:
+      - src/**/*
+
+test-node-10:
+  stage: test
+  script:
+    - npx nyc -s npm run test:node
+  artifacts:
+    paths:
+      - .nyc_output/
+  only:
+    changes:
+      - src/**/*
+      - test/**/*
+
+test-browser-chrome:
+  image: hugomrdias/node-chrome:test
+  stage: test
+  script:
+    - AEGIR_BROWSERS=ChromeDocker npm run test:browser
+  only:
+    changes:
+      - src/**/*
+      - test/**/*
+
+test-browser-firefox:
+  image: hugomrdias/node-firefox:test
+  stage: test
+  script:
+    - cd node_modules/aegir
+    - npm i --save-dev karma-coverage-istanbul-reporter
+    - cd ../..
+    - AEGIR_BROWSERS=FirefoxHeadless npm run test:browser
+  artifacts:
+    paths:
+      - coverage/
+  only:
+    changes:
+      - src/**/*
+      - test/**/*
+
+cov:
+  stage: cov
+  before_script: []
+  script:
+    - cp coverage/coverage-final.json .nyc_output/browser.json
+    - npx nyc report --reporter text-summary --reporter html
+  dependencies:
+    - test-node-10
+    - test-node-8
+    - test-browser-firefox
+  artifacts:
+    paths:
+      - coverage/
+  coverage: '/Lines        : \d+\.\d+/'
+  only:
+    changes:
+      - src/**/*
+      - test/**/*
+
+.git_auth: &git_auth |
+  export GH_RELEASE_GITHUB_API_TOKEN=$GITHUB_TOKEN
+  git remote add upstream https://hugomrdias:$GITHUB_TOKEN@github.com/hugomrdias/$CI_PROJECT_NAME.git
+  git config --global user.email "hugomrdias@gmail.com"
+  git config --global user.name "hugomrdias"
+  git checkout $CI_COMMIT_REF_NAME
+  git fetch upstream
+  git branch -u upstream/$CI_COMMIT_REF_NAME
+  echo "//registry.npmjs.org/:_authToken=$NPM_TOKEN" > .npmrc
+
+pre-release:
+  stage: pre-release
+  before_script: []
+  script:
+    - *git_auth
+    - 'npm --no-git-tag-version version prerelease &>/dev/null && npx conventional-changelog-cli -i CHANGELOG.md -r 0 -s -p angular -u && git add CHANGELOG.md && version=`node -p "require('./package.json').version"` && echo $version && git commit -am "chore(pre-release): ${version}"'
+    - git push upstream master && npm publish . --tag next
+  only:
+    refs:
+      - master
+    changes:
+      - src/**/*
+
+release:
+  stage: release
+  script:
+    - *git_auth
+    - 'cp package.json _package.json && bump=`npx conventional-recommended-bump -p angular` && echo $bump && npm --no-git-tag-version version $bump &>/dev/null && npx conventional-changelog -i CHANGELOG.md -r 0 -s -p angular && git add CHANGELOG.md && version=`node -p "require('./package.json').version"` && mv -f _package.json package.json && git commit -am "docs(CHANGELOG): ${version}" && npm version $bump -m "chore(release): v%s"'
+    - git push --follow-tags upstream master && npm publish
+    - npx gh-release -y
+  only:
+    refs:
+      - master
+    changes:
+      - src/**/*
+  when: manual
+
+interop:
+  stage: interop
+  before_script: []
+  script:
+    - curl --request POST --form "token=$CI_JOB_TOKEN" --form ref=master https://gitlab.com/api/v4/projects/8952909/trigger/pipeline
+  only:
+    - master
+  when: manual
