@@ -26,7 +26,8 @@
 </p>
 
 ### Project status
-
+[![pipeline status](https://gitlab.com/ipfs-ci/js-ipfs/badges/master/pipeline.svg)](https://gitlab.com/ipfs-ci/js-ipfs/commits/master)
+[![coverage report](https://gitlab.com/ipfs-ci/js-ipfs/badges/master/coverage.svg)](https://gitlab.com/ipfs-ci/js-ipfs/commits/master)
 We've come a long way, but this project is still in Alpha, lots of development is happening, API might change, beware of the Dragons 🐉..
 
 **Want to get started?** Check our [examples folder](/examples) to learn how to spawn an IPFS node in Node.js and in the Browser.
