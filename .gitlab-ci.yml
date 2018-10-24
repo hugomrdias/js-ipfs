@@ -23,7 +23,7 @@ check:
   stage: check
   script:
     - npm run lint
-    - npx dependency-check package.json './test/**/*.js'
+    # - npx dependency-check package.json './test/**/*.js'
     # - npm install --no-lockfile @commitlint/config-conventional @commitlint/cli --save-dev
     # - npx commitlint --extends=@commitlint/config-conventional --from=$CI_COMMIT_BEFORE_SHA --to=$CI_COMMIT_SHA
     - npm run build
