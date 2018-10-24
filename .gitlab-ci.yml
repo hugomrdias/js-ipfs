@@ -113,8 +113,7 @@ pre-release:
   only:
     refs:
       - master
-    changes:
-      *only_changes
+    <<: *only_changes
 
 release:
   stage: release
@@ -126,8 +125,7 @@ release:
   only:
     refs:
       - master
-    changes:
-      *only_changes
+    <<: *only_changes
   when: manual
 
 interop:
