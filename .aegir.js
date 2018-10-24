@@ -3,6 +3,7 @@
 const IPFSFactory = require('ipfsd-ctl')
 const parallel = require('async/parallel')
 const MockPreloadNode = require('./test/utils/mock-preload-node')
+const path = require('path')
 
 const ipfsdServer = IPFSFactory.createServer()
 const preloadNode = MockPreloadNode.createNode()
