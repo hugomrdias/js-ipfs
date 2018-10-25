@@ -37,8 +37,8 @@
       },
       {
         "packageNames": [
-          "multiaddr",
-          "multihashing-async"
+          "ipfs-api",
+          "ipfs-http-response"
         ],
         "enabled": true
       }
