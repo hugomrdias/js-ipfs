@@ -1,4 +1,4 @@
-image: node:10
+image: hugomrdias/node-alpine:test
 stages:
   - check
   - test
@@ -82,7 +82,10 @@ test-browser-firefox:
 
 cov:
   stage: cov
+  image: node:10-alpine
   before_script: []
+  variables:
+    GIT_STRATEGY: none
   script:
     - cp coverage/coverage-final.json .nyc_output/browser.json
     - npx nyc report --reporter text-summary --reporter html
@@ -122,11 +125,12 @@ pre-release:
     refs:
       - schedules
     variables:
-      - $CI_COMMIT_MESSAGE =~ /^chore(pre-release)/
-      - $CI_COMMIT_MESSAGE =~ /^chore(release)/
+      - $CI_COMMIT_MESSAGE =~ /^chore(pre-release).*/
+      - $CI_COMMIT_MESSAGE =~ /^chore(release).*/
 
 release:
   stage: release
+  before_script: []
   script:
     - *git_auth
     - "cp package.json _package.json && bump=`npx conventional-recommended-bump -p angular` && echo $bump && npm --no-git-tag-version version $bump &>/dev/null && npx conventional-changelog -i CHANGELOG.md -r 0 -s -p angular && git add CHANGELOG.md && version=`node -p \"require('./package.json').version\"` && mv -f _package.json package.json && git commit -am \"docs(CHANGELOG): ${version}\" && npm version $bump -m \"chore(release): v%s\""
@@ -139,12 +143,15 @@ release:
     refs:
       - schedules
     variables:
-      - $CI_COMMIT_MESSAGE =~ /^chore(pre-release)/
-      - $CI_COMMIT_MESSAGE =~ /^chore(release)/
+      - $CI_COMMIT_MESSAGE =~ /^chore(pre-release).*/
+      - $CI_COMMIT_MESSAGE =~ /^chore(release).*/
   when: manual
 
 interop:
   stage: interop
+  image:  byrnedo/docker-alpine-curl
+  variables:
+    GIT_STRATEGY: none
   before_script: []
   script:
     - curl --request POST --form "token=$CI_JOB_TOKEN" --form ref=master https://gitlab.com/api/v4/projects/8952909/trigger/pipeline
