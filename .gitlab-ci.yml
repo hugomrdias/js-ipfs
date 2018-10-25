@@ -113,7 +113,7 @@ pre-release:
   before_script: []
   script:
     - *git_auth
-    - 'npm --no-git-tag-version version prerelease --preid=rc &>/dev/null && npx conventional-changelog-cli -i CHANGELOG.md -r 0 -s -p angular -u && git add CHANGELOG.md && version=`node -p "require('./package.json').version"` && echo $version && git commit -am "chore(pre-release): ${version}"'
+    - "npm --no-git-tag-version version prerelease --preid=rc &>/dev/null && npx conventional-changelog-cli -i CHANGELOG.md -r 0 -s -p angular -u && git add CHANGELOG.md && version=`node -p \"require('./package.json').version\"` && echo $version && git commit -am \"chore(pre-release): ${version}\""
     - git push upstream master && npm publish . --tag next
   only:
     refs:
@@ -129,7 +129,7 @@ release:
   stage: release
   script:
     - *git_auth
-    - 'cp package.json _package.json && bump=`npx conventional-recommended-bump -p angular` && echo $bump && npm --no-git-tag-version version $bump &>/dev/null && npx conventional-changelog -i CHANGELOG.md -r 0 -s -p angular && git add CHANGELOG.md && version=`node -p "require('./package.json').version"` && mv -f _package.json package.json && git commit -am "docs(CHANGELOG): ${version}" && npm version $bump -m "chore(release): v%s"'
+    - "cp package.json _package.json && bump=`npx conventional-recommended-bump -p angular` && echo $bump && npm --no-git-tag-version version $bump &>/dev/null && npx conventional-changelog -i CHANGELOG.md -r 0 -s -p angular && git add CHANGELOG.md && version=`node -p \"require('./package.json').version\"` && mv -f _package.json package.json && git commit -am \"docs(CHANGELOG): ${version}\" && npm version $bump -m \"chore(release): v%s\""
     - git push --follow-tags upstream master && npm publish
     - npx gh-release -y
   only:
