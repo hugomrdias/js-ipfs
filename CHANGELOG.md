@@ -1,10 +1,11 @@
-<a name="0.33.0-rc.4"></a>
-# [0.33.0-rc.4](https://github.com/ipfs/js-ipfs/compare/v0.33.0-rc.1...v0.33.0-rc.4) (2018-10-25)
+<a name="0.33.0-rc.5"></a>
+# [0.33.0-rc.5](https://github.com/ipfs/js-ipfs/compare/v0.33.0-rc.1...v0.33.0-rc.5) (2018-10-25)
 
 
 ### Bug Fixes
 
 * ci config and readme ([db9bc17](https://github.com/ipfs/js-ipfs/commit/db9bc17))
+* ci expect filter ([b048c9a](https://github.com/ipfs/js-ipfs/commit/b048c9a))
 * deps semver ([4a3d340](https://github.com/ipfs/js-ipfs/commit/4a3d340))
 * fix ci config and missing deps ([39bf49d](https://github.com/ipfs/js-ipfs/commit/39bf49d))
 * fix lock ([95ab1ac](https://github.com/ipfs/js-ipfs/commit/95ab1ac))
