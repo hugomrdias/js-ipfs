@@ -149,7 +149,7 @@ release:
 
 interop:
   stage: interop
-  image:  byrnedo/docker-alpine-curl
+  image: byrnedo/docker-alpine-curl
   variables:
     GIT_STRATEGY: none
   before_script: []
