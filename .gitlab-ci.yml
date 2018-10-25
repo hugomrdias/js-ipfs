@@ -125,8 +125,8 @@ pre-release:
     refs:
       - schedules
     variables:
-      - $CI_COMMIT_MESSAGE =~ /^chore(pre-release).*/
-      - $CI_COMMIT_MESSAGE =~ /^chore(release).*/
+      - $CI_COMMIT_MESSAGE =~ /^chore\(pre-release\)/
+      - $CI_COMMIT_MESSAGE =~ /^chore\(release\)/
 
 release:
   stage: release
@@ -143,8 +143,8 @@ release:
     refs:
       - schedules
     variables:
-      - $CI_COMMIT_MESSAGE =~ /^chore(pre-release).*/
-      - $CI_COMMIT_MESSAGE =~ /^chore(release).*/
+      - $CI_COMMIT_MESSAGE =~ /^chore\(pre-release\)/
+      - $CI_COMMIT_MESSAGE =~ /^chore\(release\)/
   when: manual
 
 interop:
