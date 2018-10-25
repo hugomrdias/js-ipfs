@@ -32,6 +32,9 @@ check:
   artifacts:
     paths:
       - dist/
+  except:
+    refs:
+        - schedules
 
 test-node-8:
   stage: test
@@ -41,8 +44,9 @@ test-node-8:
   artifacts:
     paths:
       - .nyc_output/
-  only:
-    *only_changes
+  except:
+    refs:
+        - schedules
 
 test-node-10:
   stage: test
@@ -51,16 +55,15 @@ test-node-10:
   artifacts:
     paths:
       - .nyc_output/
-  only:
-    *only_changes
+  except:
+    refs:
+        - schedules
 
 test-browser-chrome:
   image: hugomrdias/node-chrome:test
   stage: test
   script:
     - AEGIR_BROWSERS=ChromeDocker npm run test:browser
-  only:
-    *only_changes
 
 test-browser-firefox:
   image: hugomrdias/node-firefox:test
@@ -73,8 +76,9 @@ test-browser-firefox:
   artifacts:
     paths:
       - coverage/
-  only:
-    *only_changes
+  except:
+    refs:
+        - schedules
 
 cov:
   stage: cov
@@ -90,8 +94,9 @@ cov:
     paths:
       - coverage/
   coverage: '/Lines        : \d+\.\d+/'
-  only:
-    *only_changes
+  except:
+    refs:
+        - schedules
 
 .git_auth: &git_auth |
   export GH_RELEASE_GITHUB_API_TOKEN=$GITHUB_TOKEN
@@ -113,7 +118,12 @@ pre-release:
   only:
     refs:
       - master
-    <<: *only_changes
+  except:
+    refs:
+        - schedules
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /^chore(pre-release)/
+      - $CI_COMMIT_MESSAGE =~ /^chore(release)/
 
 release:
   stage: release
@@ -125,7 +135,12 @@ release:
   only:
     refs:
       - master
-    <<: *only_changes
+  except:
+    refs:
+      - schedules
+    variables:
+      - $CI_COMMIT_MESSAGE =~ /^chore(pre-release)/
+      - $CI_COMMIT_MESSAGE =~ /^chore(release)/
   when: manual
 
 interop:
@@ -134,5 +149,4 @@ interop:
   script:
     - curl --request POST --form "token=$CI_JOB_TOKEN" --form ref=master https://gitlab.com/api/v4/projects/8952909/trigger/pipeline
   only:
-    - master
-  when: manual
+    - schedules
