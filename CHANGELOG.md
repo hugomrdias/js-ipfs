@@ -1,5 +1,5 @@
-<a name="0.33.0-rc.3"></a>
-# [0.33.0-rc.3](https://github.com/ipfs/js-ipfs/compare/v0.33.0-rc.1...v0.33.0-rc.3) (2018-10-25)
+<a name="0.33.0-rc.4"></a>
+# [0.33.0-rc.4](https://github.com/ipfs/js-ipfs/compare/v0.33.0-rc.1...v0.33.0-rc.4) (2018-10-25)
 
 
 ### Bug Fixes
@@ -7,8 +7,13 @@
 * ci config and readme ([db9bc17](https://github.com/ipfs/js-ipfs/commit/db9bc17))
 * deps semver ([4a3d340](https://github.com/ipfs/js-ipfs/commit/4a3d340))
 * fix ci config and missing deps ([39bf49d](https://github.com/ipfs/js-ipfs/commit/39bf49d))
+* fix lock ([95ab1ac](https://github.com/ipfs/js-ipfs/commit/95ab1ac))
+* fix type ([4adce6d](https://github.com/ipfs/js-ipfs/commit/4adce6d))
+* fix type 2 ([659ad62](https://github.com/ipfs/js-ipfs/commit/659ad62))
+* new images and tweaks ([64c96be](https://github.com/ipfs/js-ipfs/commit/64c96be))
 * remove dep-check ([55d122b](https://github.com/ipfs/js-ipfs/commit/55d122b))
 * remove deps make tests break ([d202500](https://github.com/ipfs/js-ipfs/commit/d202500))
+* renovate ([f81e48e](https://github.com/ipfs/js-ipfs/commit/f81e48e))
 * tweak ci config ([4b85437](https://github.com/ipfs/js-ipfs/commit/4b85437))
 * tweak ci config 2 ([3d94ec3](https://github.com/ipfs/js-ipfs/commit/3d94ec3))
 * tweak ci config 3 ([bad515c](https://github.com/ipfs/js-ipfs/commit/bad515c))
