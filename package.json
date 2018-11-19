@@ -37,8 +37,7 @@
       },
       {
         "packageNames": [
-          "ipfs-api",
-          "ipfs-http-response"
+          "^ipfs"
         ],
         "enabled": true
       }
