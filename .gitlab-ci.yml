@@ -64,7 +64,7 @@ test-browser-chrome:
   stage: test
   script:
     - AEGIR_BROWSERS=ChromeDocker npm run test:browser
-    - AEGIR_BROWSERS=ChromeDocker npm run test:webworker
+    # - AEGIR_BROWSERS=ChromeDocker npm run test:webworker
   except:
     refs:
       - schedules
@@ -74,7 +74,7 @@ test-browser-firefox:
   stage: test
   script:
     - AEGIR_BROWSERS=FirefoxHeadless npm run test:browser
-    - AEGIR_BROWSERS=ChromeDocker npm run test:webworker
+    # - AEGIR_BROWSERS=ChromeDocker npm run test:webworker
   artifacts:
     paths:
       - coverage/
