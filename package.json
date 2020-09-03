@@ -141,7 +141,7 @@
     "human-to-milliseconds": "^1.0.0",
     "interface-datastore": "~0.5.0",
     "ipfs-api": "^24.0.0",
-    "ipfs-bitswap": "~0.20.3",
+    "ipfs-bitswap": "~0.24.1",
     "ipfs-block": "~0.7.1",
     "ipfs-block-service": "~0.14.0",
     "ipfs-http-response": "~0.1.2",
