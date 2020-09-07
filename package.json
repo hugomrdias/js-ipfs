@@ -214,7 +214,7 @@
     "update-notifier": "^2.5.0",
     "varint": "^5.0.0",
     "yargs": "^12.0.1",
-    "yargs-parser": "^10.1.0",
+    "yargs-parser": "^13.1.2",
     "yargs-promise": "^1.1.0"
   },
   "optionalDependencies": {
