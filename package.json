@@ -160,7 +160,7 @@
     "joi": "^13.4.0",
     "joi-browser": "^13.4.0",
     "joi-multiaddr": "^2.0.0",
-    "libp2p": "~0.23.0",
+    "libp2p": "~0.38.0",
     "libp2p-bootstrap": "~0.9.3",
     "libp2p-circuit": "~0.2.0",
     "libp2p-crypto": "~0.13.0",
